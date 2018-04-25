@@ -260,9 +260,9 @@ labels2[4]='fosc'
 labels2[5]=r'ln$\sigma$'
 
 
-#fig = corner.corner(samples, labels=labels2)
-#fig.savefig(loc+"/no_log_tran_corner.png")
-#plt.show()
+fig = corner.corner(samples, labels=labels2)
+fig.savefig(loc+"/no_log_tran_corner.png")
+plt.show()
 
 quantiles = np.percentile(samples,[16,50,84],axis=0).T
 

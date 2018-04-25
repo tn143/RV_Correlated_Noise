@@ -198,13 +198,13 @@ kernel.freeze_parameter("log_Q") #to make it a Harvey model
 
 #numax
 Q = np.exp(3.0)
-w0 = muhz2omega(50) #peak of oscillations
+w0 = muhz2omega(20) #peak of oscillations
 S0 = np.var(fiber['rv']) / (w0*Q)
 
 kernel += terms.SHOTerm(log_S0=np.log(S0), log_Q=np.log(Q), log_omega0=np.log(w0),
                       bounds=[(-20, 20), (0.1, 5), (np.log(muhz2omega(5)), np.log(muhz2omega(100)))])
 
-kernel += terms.JitterTerm(log_sigma=1, bounds=[(-20,40)])
+kernel += terms.JitterTerm(log_sigma=1, bounds=[(-2,10)])
 
 
 #initial guess of RV model
@@ -269,7 +269,7 @@ gp.set_parameter_vector(initial)
 #labels=gp.get_parameter_names()
 labels=['logS01', 'logomega01', 'logS0osc', 'logQosc', 'logomega0osc', 'logsigma', "vfiber", "vslit", "K", "w", "e", "Tr","P"]
 
-nwalkers, niter, ndim = 200, 2000, len(labels)
+nwalkers, niter, ndim = 150, 5000, len(labels)
 burnin=int(niter/2)
 sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(RV,gp))
 
